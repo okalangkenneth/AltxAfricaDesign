@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Chatbot Interface Example</title>
+</head>
+
+<body>
+    <div class="chatbot-container">
+        <button class="close-button">X</button>
+        <div class="top-actions">
+            <div class="right-actions"></div>
+        </div>
+        <div class="chat-window">
+            <h5 class="chat-title">Welcome! 👋 Ask me about Altx Africa or select an option below to get started.
+            </h5>
+
+            <div class="chat">
+                <!-- User Message -->
+                <div class="msg user-message">
+                    <span>Hi!<br>What's up?</span>
+                    <div class="message-timestamp">16:35</div>
+                </div>
+                <!-- Bot Message -->
+                <div class="msg bot-message">
+                    <div class="message-content"><span>Hi dear! <br>Doing some CSS research, you?</span></div>
+                    <div class="message-footer">
+                        <div class="message-name">Boti</div>
+                        <div class="message-timestamp">16:36</div>
+                    </div>
+                </div>
+                <div data-time="16:38" class="msg user-message"><span>Also learning some cool CSS stuff 🦄</span></div>
+                <div data-time="16:38" class="msg user-message"><span>!!</span></div>
+                <div data-time="16:38" class="msg user-message"><span>Up for a coffee today? ☕</span></div>
+                <div data-time="Anna 16:40" class="msg bot-message"><span>It would be a pleasure!</span></div>
+                <div data-time="Anna 16:40" class="msg bot-message"><span>😍</span></div>
+            </div>
+            <div class="typing-indicator" style="display: none;">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="links">
+            <a href="#" class="altx-info">What is Altx Africa</a>
+            <a href="#" class="contact-team">Contact our team</a>
+        </div>
+
+        <div class="input-area">
+            <input class="user-input" type="text" placeholder="Type your message..." />
+            <button class="send-button">Send</button>
+        </div>
+    </div>
+    <img src="images/chat.png" alt="Chat with us" class="chatbot-launcher" />
+    <script src="scripts.js"></script>
+</body>
+
+</html>

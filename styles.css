@@ -1,0 +1,351 @@
+/* QuickReset */
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Styles for the chatbot container */
+.chatbot-container {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    background-color: darkgrey;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    width: 300px;
+    max-height: 600px;
+    justify-content: space-between;
+    overflow: hidden;
+    /* Transition effect */
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateY(20px);
+}
+
+.chatbot-container.visible {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Styles for the chat window */
+.chat-window {
+    height: calc(100% - 130px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+/* Styles for the chat messages */
+.chat {
+    --rad: 20px;
+    --rad-sm: 3px;
+    font: 16px/1.5 sans-serif;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.msg {
+    position: relative;
+    font-size: 12px;
+    max-width: 75%;
+    padding: 7px 15px;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+
+}
+
+/* Styles for the message footer containing the timestamp and name */
+.message-footer {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+.msg.user-message {
+    position: relative;
+    border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
+    background: #007BFF;
+    color: #fff;
+    margin-left: auto;
+    /* Moves it to the right */
+}
+
+.msg.bot-message {
+    border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+    background: lightgray;
+    color: black;
+    margin-right: auto;
+
+    /* Moves it to the left */
+}
+
+/* Improve radius for messages group */
+.msg.user-message:first-child,
+.msg.bot-message+.msg.user-message {
+    border-top-right-radius: var(--rad);
+}
+
+.msg.bot-message:first-child,
+.msg.user-message+.msg.bot-message {
+    border-top-left-radius: var(--rad);
+}
+
+/* Styles for time */
+.message-timestamp {
+    font-size: 12px;
+    color: black;
+    margin-top: 20px;
+    align-self: flex-end;
+}
+
+
+/* Styles for the name */
+.message-name {
+    font-size: 12px;
+    color: black;
+    position: absolute;
+    bottom: -20px;
+    /* adjust as needed */
+    right: 10px;
+    /* adjust as needed */
+}
+
+.msg.bot-message .message-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    right: 10px;
+    /* adjust as needed */
+    bottom: 0.10px;
+    /* adjust as needed */
+}
+
+.msg.user-message .message-timestamp {
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    font-size: 12px;
+    color: black;
+}
+
+
+.msg.user-message::before {
+    right: 15px;
+}
+
+.msg.bot-message::before {
+    left: 15px;
+}
+
+
+
+/* Show time only for first message in group */
+.msg:first-child::before,
+.msg.user-message+.msg.bot-message::before,
+.msg.bot-message+.msg.user-message::before {
+    display: block;
+}
+
+/* Styles for the chat header */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background-color: #f1f1f1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.message-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Styles for the input area */
+.input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.user-input {
+    flex-grow: 1;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+.send-button {
+    background-color: black;
+    color: #fff;
+    padding: 6px 12px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Styles for the chatbot launcher */
+.chatbot-launcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 20px;
+    width: 100px;
+    height: 100px;
+    animation: fadeInUp 2s ease-out;
+    color: #fff;
+    text-align: center;
+    background-color: transparent;
+}
+
+/* Styles for the return to assistant and close button */
+.return-to-assistant,
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #333;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.links {
+    padding: 0 10px 10px;
+    background: #f1f1f1;
+}
+
+/* Styles for the information and contact team links */
+.altx-info,
+.contact-team {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.links a {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 2px 15px;
+    border-radius: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+    border: 3px solid #333;
+    margin-top: 20px;
+}
+
+/* Styles for the home icon */
+.home-icon {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Styles for the top actions */
+.top-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.right-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* Styles for the typing indicator */
+.typing-indicator {
+    display: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.typing-indicator span {
+    position: absolute;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    margin-top: -2px;
+    background: black;
+    border-radius: 50%;
+    animation: typing-indicator-blink 1s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) {
+    left: 3px;
+    animation-delay: -0.3s;
+}
+
+.typing-indicator span:nth-child(2) {
+    left: 8px;
+    animation-delay: -0.15s;
+}
+
+.typing-indicator span:nth-child(3) {
+    left: 13px;
+    animation-delay: 0;
+}
+
+/* Animation for the typing indicator */
+@keyframes typing-indicator-blink {
+    0% {
+        opacity: 0.2;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+}
+
+/* Animation for the chatbot container */
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
